@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form action="" method=post>
+    {% if mayaclothes is defined %}
+        <h2>Edit Maya's Clothes Inventory</h2>
+    {% else %}
+        <h2>Create new item</h2>
+    {% endif %}
+
+        <div class="control-group">
+
+
+            <div class="control-group" >
+                <div class="controls">
+                    <select class="selectpicker" name="category" required>
+                        {% for category in categories %}
+                            {% if mayaclothes is defined %}
+                            <option value="{{ category.id }}" {% if mayaclothes.category_id == category.id %} selected {% endif %}>{{ category.name }}</option>
+                            {% else %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="control-group">
+                <div class="controls">
+                    <select class="selectpicker" name="age" required>
+                        {% for age in ages %}
+                            {% if mayaclothes is defined %}
+                                <option value="{{ age.id }}" {% if mayaclothes.age_id == age.id %} selected {% endif %}>{{ age.name }}</option>
+                            {% else %}
+                                <option value="{{ age.id }}">{{ age.name }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <hr>
+            <div class="control-group">
+                <div class="controls">
+                    {% if mayaclothes is defined %}
+                    <input type="text" id="description" name="description" maxlength="60" class="input-xlarge"
+                           placeholder="Describe Item" value="{{ mayaclothes.description }}"
+                           required>
+                    {% else %}
+                     <input type="text" id="description" name="description" maxlength="60" class="input-xlarge"
+                           placeholder="Describe Item"
+                           required>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-success">
+                    {% if mayaclothes %}
+                        Save
+                    {% else %}
+                        Create Item
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}
