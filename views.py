@@ -7,18 +7,18 @@ from mayaclothesapp import app
 def list_all():
     return render_template(
         'list.html',
-        categories=Category.query.all(),
+        ages=Age.query.order_by(Age.value.asc()),
         mayaclothes=MayaClothes.query.join(Age).order_by(Age.value.asc())
     )
 
 
 @app.route('/<name>')
 def list_mayaclothes(name):
-    category = Category.query.filter_by(name=name).first()
+    age = Age.query.filter_by(name=name).first()
     return render_template(
         'list.html',
-        mayaclothes=MayaClothes.query.filter_by(category=category).join(Age).order_by(Age.value.asc()),
-        categories=Category.query.all(),
+        mayaclothes=MayaClothes.query.filter_by(age=age).join(Category),
+        ages=Age.query.order_by(Age.value.asc()),
     )
 
 @app.route('/new-item', methods=['GET', 'POST'])
