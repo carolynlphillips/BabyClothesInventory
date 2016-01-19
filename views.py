@@ -8,7 +8,7 @@ def list_all():
     return render_template(
         'list.html',
         categories=Category.query.all(),
-        mayaclothes=MayaClothes.query.join(Age).order_by(Age.value.desc())
+        mayaclothes=MayaClothes.query.join(Age).order_by(Age.value.asc())
     )
 
 
@@ -17,7 +17,7 @@ def list_mayaclothes(name):
     category = Category.query.filter_by(name=name).first()
     return render_template(
         'list.html',
-        mayaclothes=MayaClothes.query.filter_by(category=category).join(Age).order_by(Age.value.desc()),
+        mayaclothes=MayaClothes.query.filter_by(category=category).join(Age).order_by(Age.value.asc()),
         categories=Category.query.all(),
     )
 
@@ -35,7 +35,7 @@ def new():
             'new-item.html',
             page='new-item',
             categories=Category.query.all(),
-            ages=Age.query.all()
+            ages=Age.query.order_by(Age.value.asc())
         )
 
 
